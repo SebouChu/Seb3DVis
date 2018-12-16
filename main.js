@@ -26,8 +26,13 @@ var vertexPositions = [];
 var vertexColors = [];
 
 var translationValues = {x: 0, y: 0, z: 0};
-var rotationValues = {x: -Math.PI / 7, y: 3 * Math.PI / 4, z: 0};
-var scaleFactor = 1.0
+var rotationValues = {x: 0, y: 0, z: 0};
+var scaleFactor = 1.0;
+var yFov = 75;
+
+var xTranslationInput, yTranslationInput, zTranslationInput,
+    xRotationInput, yRotationInput, zRotationInput,
+    scaleFactorInput, yFovInput;
 
 function initContext() {
     canvas = document.getElementById('dawin-webgl');
@@ -93,7 +98,7 @@ function initPerspective() {
 
     var perspectiveMat = mat4.create();
 
-    var fieldOfView = 75 * Math.PI / 180;
+    var fieldOfView = yFov * Math.PI / 180;
     var aspect = canvas.clientWidth / canvas.clientHeight;
     mat4.perspective(perspectiveMat, fieldOfView, aspect, 0.1, 100.0);
 
@@ -149,6 +154,49 @@ function initBuffers() {
     buffers["pos"] = posBuffer;
 }
 
+function initInputs() {
+    xTranslationInput = document.getElementById('xTranslationInput');
+    xTranslationInput.addEventListener('input', function () {
+        translationValues.x = this.value;
+    });
+
+    yTranslationInput = document.getElementById('yTranslationInput');
+    yTranslationInput.addEventListener('input', function () {
+        translationValues.y = this.value;
+    });
+
+    zTranslationInput = document.getElementById('zTranslationInput');
+    zTranslationInput.addEventListener('input', function () {
+        translationValues.z = this.value;
+    });
+
+    xRotationInput = document.getElementById('xRotationInput');
+    xRotationInput.addEventListener('input', function () {
+        rotationValues.x = this.value;
+    });
+
+    yRotationInput = document.getElementById('yRotationInput');
+    yRotationInput.addEventListener('input', function () {
+        rotationValues.y = this.value;
+    });
+
+    zRotationInput = document.getElementById('zRotationInput');
+    zRotationInput.addEventListener('input', function () {
+        rotationValues.z = this.value;
+    });
+
+    scaleFactorInput = document.getElementById('scaleFactorInput');
+    scaleFactorInput.addEventListener('input', function () {
+        scaleFactor = this.value;
+    });
+
+    yFovInput = document.getElementById('yFovInput');
+    yFovInput.addEventListener('input', function () {
+        yFov = this.value;
+        initPerspective();
+    });
+}
+
 function refreshTransformations() {
     var rotationMat = mat4.create();
     mat4.rotateX(rotationMat, rotationMat, -rotationValues.x);
@@ -168,7 +216,6 @@ function refreshTransformations() {
 }
 
 function draw() {
-    rotationValues.y += 0.01;
     refreshTransformations();
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -183,12 +230,13 @@ function main() {
     initAttributes();
     initPerspective();
 
+    setCube();
+    initBuffers();
+    initInputs();
+
+    draw();
+
     window.addEventListener('resize', function() {
         initPerspective();
     });
-
-    setCube();
-    initBuffers();
-
-    draw();
 }

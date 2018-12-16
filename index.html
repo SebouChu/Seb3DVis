@@ -10,7 +10,7 @@
   <body onload='main()'>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 pl-0 pr-0">
           <canvas id='dawin-webgl'>
             Utilisez un navigateur compatible avec WebGL.
           </canvas>
@@ -23,21 +23,21 @@
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="xTranslation">Tx</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="xTranslation" value="0" min="-10" max="10" step="0.1" id="xTranslationInput">
+              <input type="range" class="form-control-range" name="xTranslation" value="0" min="-10" max="10" step="0.1" id="xTranslationInput">
             </div>
           </div>
 
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="yTranslation">Ty</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="yTranslation" value="0" min="-10" max="10" step="0.1" id="yTranslationInput">
+              <input type="range" class="form-control-range" name="yTranslation" value="0" min="-10" max="10" step="0.1" id="yTranslationInput">
             </div>
           </div>
 
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="zTranslation">Tz</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="zTranslation" value="0" min="-10" max="10" step="0.1" id="zTranslationInput">
+              <input type="range" class="form-control-range" name="zTranslation" value="0" min="-10" max="10" step="0.1" id="zTranslationInput">
             </div>
           </div>
 
@@ -46,21 +46,21 @@
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="xRotation">Rx</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="xRotation" value="0" min="-3.14" max="3.14" step="0.01" id="xRotationInput">
+              <input type="range" class="form-control-range" name="xRotation" value="0" min="-3.14" max="3.14" step="0.01" id="xRotationInput">
             </div>
           </div>
 
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="yRotation">Ry</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="yRotation" value="0" min="-3.14" max="3.14" step="0.01" id="yRotationInput">
+              <input type="range" class="form-control-range" name="yRotation" value="0" min="-3.14" max="3.14" step="0.01" id="yRotationInput">
             </div>
           </div>
 
           <div class="form-group row align-items-center">
             <label class="col-sm-2" for="zRotation">Rz</label>
             <div class="col-sm-10">
-              <input type="range" class="form-control" name="zRotation" value="0" min="-3.14" max="3.14" step="0.01" id="zRotationInput">
+              <input type="range" class="form-control-range" name="zRotation" value="0" min="-3.14" max="3.14" step="0.01" id="zRotationInput">
             </div>
           </div>
 
@@ -69,14 +69,14 @@
           <div class="form-group row align-items-center">
             <label class="col-sm-3" for="scaleFactor">Zoom</label>
             <div class="col-sm-9">
-              <input type="range" class="form-control" name="scaleFactor" value="1" min="0.1" max="5" step="0.1" id="scaleFactorInput">
+              <input type="range" class="form-control-range" name="scaleFactor" value="1" min="0.1" max="5" step="0.1" id="scaleFactorInput">
             </div>
           </div>
 
           <div class="form-group row align-items-center">
             <label class="col-sm-3" for="yFov">FOV</label>
             <div class="col-sm-9">
-              <input type="range" class="form-control" name="yFov" value="75" min="30" max="120" step="1" id="yFovInput">
+              <input type="range" class="form-control-range" name="yFov" value="75" min="30" max="120" step="1" id="yFovInput">
             </div>
           </div>
         </div>
