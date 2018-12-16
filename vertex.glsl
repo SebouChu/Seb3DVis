@@ -1,14 +1,14 @@
 attribute vec3 position;
-attribute float size;
-attribute vec4 aVertexColor;
+attribute vec3 vertexColor;
 
-uniform mat4 modelView;
 uniform mat4 perspective;
+uniform mat4 rotation;
+uniform mat4 translation;
 
 varying vec4 vColor;
 
 void main () {
-  gl_Position = perspective * modelView * vec4(position, 1);
-  gl_PointSize = 20;
-  vColor = aVertexColor;
+  gl_Position = perspective * translation * rotation * vec4(position, 1);
+  gl_PointSize = 1.0;
+  vColor = vec4(vertexColor, 1.0);
 }
