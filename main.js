@@ -27,6 +27,7 @@ var vertexColors = [];
 
 var translationValues = {x: 0, y: 0, z: 0};
 var rotationValues = {x: -Math.PI / 7, y: 3 * Math.PI / 4, z: 0};
+var scaleFactor = 1.0
 
 function initContext() {
     canvas = document.getElementById('dawin-webgl');
@@ -78,6 +79,7 @@ function initAttributes() {
     uniformPerspectiveMat = gl.getUniformLocation(program, "perspective");
     uniformTranslationMat = gl.getUniformLocation(program, "translation");
     uniformRotationMat = gl.getUniformLocation(program, "rotation");
+    uniformScaleMat = gl.getUniformLocation(program, "scale");
 }
 
 function initPerspective() {
@@ -150,6 +152,11 @@ function refreshTransformations() {
     var translationVec = vec3.fromValues(translationValues.x, translationValues.y, translationValues.z - 5);
     mat4.fromTranslation(translationMat, translationVec);
     gl.uniformMatrix4fv(uniformTranslationMat, false, translationMat);
+
+    var scaleMat = mat4.create();
+    var scaleVec = vec3.fromValues(scaleFactor, scaleFactor, scaleFactor, 1);
+    mat4.fromScaling(scaleMat, scaleVec);
+    gl.uniformMatrix4fv(uniformScaleMat, false, scaleMat);
 }
 
 function draw() {
