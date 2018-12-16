@@ -11,28 +11,25 @@ function loadText(url) {
     }
 }
 
-var canvas;
-var gl;
-var program;
-var buffers = [];
+var canvas, gl, program;
 
-var attribPos;
-var attribColor;
-var uniformPerspectiveMat;
-var uniformTranslationMat;
-var uniformRotationMat;
+var attribPos, attribColor, uniformPerspectiveMat,
+    uniformTranslationMat, uniformRotationMat, uniformScaleMat;
 
-var vertexPositions = [];
-var vertexColors = [];
+var buffers = [],
+    vertexPositions = [],
+    vertexColors = [];
 
 var translationValues = {x: 0, y: 0, z: 0};
 var rotationValues = {x: 0, y: 0, z: 0};
 var scaleFactor = 1.0;
 var yFov = 75;
+var cubeColor, altCubeColor;
 
 var xTranslationInput, yTranslationInput, zTranslationInput,
     xRotationInput, yRotationInput, zRotationInput,
-    scaleFactorInput, yFovInput;
+    scaleFactorInput, yFovInput,
+    colorPicker, currentColorElt;
 
 function initContext() {
     canvas = document.getElementById('dawin-webgl');
@@ -195,6 +192,30 @@ function initInputs() {
         yFov = this.value;
         initPerspective();
     });
+
+    currentColorElt = document.getElementById('currentHexColor');
+
+    colorPicker = new iro.ColorPicker('#colorPicker');
+
+    colorPicker.on("color:change", function(color) {
+      currentColorElt.innerText = color.hexString.toUpperCase();
+
+      cubeColor = Object.values(color.rgb).map(comp => comp / 255);
+      altCubeColor = cubeColor.map(color => { return (color > 0.85) ? color - 0.1 : color + 0.1 });
+      refreshColor();
+    });
+
+}
+
+function refreshColor() {
+    vertexColors = [
+        Array(12).fill([altCubeColor[0], cubeColor[1], cubeColor[2]]).flat(),
+        Array(12).fill([cubeColor[0], altCubeColor[1], cubeColor[2]]).flat(),
+        Array(12).fill([cubeColor[0], cubeColor[1], altCubeColor[2]]).flat()
+    ].flat();
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers["color"]);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
 }
 
 function refreshTransformations() {
