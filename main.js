@@ -41,6 +41,12 @@ function initContext() {
     gl.enable(gl.DEPTH_TEST);
 }
 
+function setCanvasResolution() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+}
+
 function initShaders() {
     var vertexShaderSource = loadText("vertex.glsl");
     var vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -83,10 +89,12 @@ function initAttributes() {
 }
 
 function initPerspective() {
+    setCanvasResolution();
+
     var perspectiveMat = mat4.create();
 
     var fieldOfView = 75 * Math.PI / 180;
-    var aspect = canvas.width / canvas.height;
+    var aspect = canvas.clientWidth / canvas.clientHeight;
     mat4.perspective(perspectiveMat, fieldOfView, aspect, 0.1, 100.0);
 
     gl.uniformMatrix4fv(uniformPerspectiveMat, false, perspectiveMat);
@@ -174,6 +182,10 @@ function main() {
     initShaders();
     initAttributes();
     initPerspective();
+
+    window.addEventListener('resize', function() {
+        initPerspective();
+    });
 
     setCube();
     initBuffers();
