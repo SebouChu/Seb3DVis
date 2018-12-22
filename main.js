@@ -196,10 +196,6 @@ function initInputs() {
     currentColorElt = document.getElementById('currentHexColor');
     colorPickerWrapper = document.getElementById('colorPicker');
     initColorPicker();
-
-    // Color picker not responsive by default
-    window.addEventListener('resize', initColorPicker);
-
 }
 
 function initColorPicker() {
@@ -271,5 +267,6 @@ function main() {
 
     window.addEventListener('resize', function() {
         initPerspective();
+        initColorPicker(); // Color picker not responsive by default
     });
 }
