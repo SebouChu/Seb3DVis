@@ -28,7 +28,7 @@ var cubeColor, altCubeColor;
 
 var xTranslationInput, yTranslationInput, zTranslationInput,
     xRotationInput, yRotationInput, zRotationInput,
-    scaleFactorInput, yFovInput,
+    scaleFactorInput, yFovInput, mousePressed = false,
     colorPickerWrapper, colorPicker, currentColorElt, selectedColor = '#FFF';
 
 function initContext() {
@@ -223,7 +223,32 @@ function initMouseEvents() {
                                      : Math.max(scaleFactor - 0.02, 0.1);
 
         scaleFactorInput.value = scaleFactor;
-    })
+    });
+
+    canvas.addEventListener('mousedown', function () {
+        mousePressed = true;
+    });
+
+    canvas.addEventListener('mouseup', function () {
+        mousePressed = false;
+    });
+
+    canvas.addEventListener('mouseleave', function () {
+        mousePressed = false;
+    });
+
+    canvas.addEventListener('mousemove', function (e) {
+        if (!mousePressed) {
+            return;
+        }
+        rotationValues.x -= (event.movementY / 100);
+        rotationValues.x = rotationValues.x - 2 * Math.PI * Math.floor((rotationValues.x + Math.PI) / (2 * Math.PI))
+        xRotationInput.value = rotationValues.x;
+
+        rotationValues.y -= (event.movementX / 100);
+        rotationValues.y = rotationValues.y - 2 * Math.PI * Math.floor((rotationValues.y + Math.PI) / (2 * Math.PI))
+        yRotationInput.value = rotationValues.y;
+    });
 }
 
 function refreshColor() {
