@@ -215,6 +215,17 @@ function initColorPicker() {
     });
 }
 
+function initMouseEvents() {
+    canvas.addEventListener('wheel', function (e) {
+        e.preventDefault();
+
+        scaleFactor = (e.deltaY > 0) ? Math.min(scaleFactor + 0.02, 5)
+                                     : Math.max(scaleFactor - 0.02, 0.1);
+
+        scaleFactorInput.value = scaleFactor;
+    })
+}
+
 function refreshColor() {
     vertexColors = [
         Array(12).fill([altCubeColor[0], cubeColor[1], cubeColor[2]]).flat(),
@@ -262,6 +273,7 @@ function main() {
     setCube();
     initBuffers();
     initInputs();
+    initMouseEvents();
 
     draw();
 
