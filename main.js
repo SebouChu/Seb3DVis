@@ -29,7 +29,7 @@ var cubeColor, altCubeColor;
 var xTranslationInput, yTranslationInput, zTranslationInput,
     xRotationInput, yRotationInput, zRotationInput,
     scaleFactorInput, yFovInput,
-    colorPicker, currentColorElt;
+    colorPickerWrapper, colorPicker, currentColorElt, selectedColor = '#FFF';
 
 function initContext() {
     canvas = document.getElementById('dawin-webgl');
@@ -194,17 +194,29 @@ function initInputs() {
     });
 
     currentColorElt = document.getElementById('currentHexColor');
+    colorPickerWrapper = document.getElementById('colorPicker');
+    initColorPicker();
 
-    colorPicker = new iro.ColorPicker('#colorPicker');
+    // Color picker not responsive by default
+    window.addEventListener('resize', initColorPicker);
+
+}
+
+function initColorPicker() {
+    colorPickerWrapper.innerHTML = '';
+
+    colorPicker = new iro.ColorPicker(colorPickerWrapper, {
+        color: selectedColor
+    });
 
     colorPicker.on("color:change", function(color) {
-      currentColorElt.innerText = color.hexString.toUpperCase();
+      selectedColor = color.hexString.toUpperCase();
+      currentColorElt.innerText = selectedColor;
 
       cubeColor = Object.values(color.rgb).map(comp => comp / 255);
       altCubeColor = cubeColor.map(color => { return (color > 0.85) ? color - 0.1 : color + 0.1 });
       refreshColor();
     });
-
 }
 
 function refreshColor() {
