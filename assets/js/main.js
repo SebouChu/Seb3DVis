@@ -50,11 +50,11 @@ function setCanvasResolution() {
 }
 
 function initShaders() {
-    var vertexShaderSource = loadText("vertex.glsl");
+    var vertexShaderSource = loadText("assets/glsl/vertex.glsl");
     var vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, vertexShaderSource);
 
-    var fragmentShaderSource = loadText("fragment.glsl");
+    var fragmentShaderSource = loadText("assets/glsl/fragment.glsl");
     var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader, fragmentShaderSource);
 
